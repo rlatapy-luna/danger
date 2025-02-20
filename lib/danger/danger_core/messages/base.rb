@@ -10,6 +10,7 @@ module Danger
     end
 
     def compare_by_file_and_line(other)
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> enter compare_by_file_and_line"
       order = cmp_nils(file, other.file)
       return order unless order.nil?
 

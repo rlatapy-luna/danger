@@ -33,6 +33,8 @@ module Danger
     end
 
     def <=>(other)
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> enter violation compare"
+
       types = VALID_TYPES + [:markdown]
       order = types.index(type) <=> types.index(other.type)
       return order unless order.zero?

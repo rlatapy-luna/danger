@@ -465,13 +465,18 @@ RSpec.describe Danger::RequestSources::GitHub, host: :github do
         allow(@g.client).to receive(:pull_request_comments).with("artsy/eigen", "800").and_return([])
 
         expect(@g.client).to receive(:create_pull_request_comment).with("artsy/eigen", "800", anything, "561827e46167077b5e53515b4b7349b8ae04610b", "CHANGELOG.md", 4)
+        expect(@g.client).to receive(:create_pull_request_comment).with("artsy/eigen", "800", anything, "561827e46167077b5e53515b4b7349b8ae04610b", "CHANGELOG.md", 4)
 
         expect(@g.client).to receive(:delete_comment).with("artsy/eigen", inline_issue_id_1).and_return({})
         expect(@g.client).to receive(:delete_comment).with("artsy/eigen", inline_issue_id_2).and_return({})
         expect(@g.client).to receive(:delete_comment).with("artsy/eigen", main_issue_id).and_return({})
 
         v = Danger::Violation.new("Sure thing", true, "CHANGELOG.md", 4)
-        @g.update_pull_request!(warnings: [], errors: [], messages: [v])
+        v2 = Danger::Violation.new("Sure thing 234", true, "CHANGELOG.md", 4)
+
+        w = Danger::Violation.new("Sure thing", true, v, v)
+        w2 = Danger::Violation.new("Sure thing 2", true, v2, v2)
+        @g.update_pull_request!(warnings: [], errors: [], messages: [w, w2])
       end
 
       it "correctly handles trailing tabs in diff" do
